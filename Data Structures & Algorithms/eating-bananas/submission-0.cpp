@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool canEat(vector<int>& piles, int h, int k) {
+        long long hours = 0;
+
+        for (int bananas : piles)
+            hours += (bananas + k - 1) / k;
+
+        return hours <= h;
+    }
+
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int low = 1;
+        int high = piles[0];
+        for(int num:piles){
+            high = max(num,high);
+        }
+        while(low <= high){
+            int mid = low +(high-low)/2;
+            if(canEat(piles,h,mid)){
+                high = mid-1;
+            }else{
+                low = mid+1;
+            }
+        }
+        return low;
+    }
+};
